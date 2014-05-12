@@ -19,9 +19,6 @@ function on_keyboard_action(event){
     if(k==17){
       if(ctrl_pressed == false)
         ctrl_pressed = true;
-      if (!window.Clipboard)
-        pasteCatcher.focus();
-      }
     }
 function on_keyboardup_action(event){
   //ctrl
@@ -43,14 +40,14 @@ function pasteHandler(e){
           var blob = items[i].getAsFile();
           var URLObj = window.URL || window.webkitURL;
           var source = URLObj.createObjectURL(blob);
-          paste_createImage(blob, source);
+          paste_image(blob, source);
         }
       }
     }
   }
 }
 
-function paste_createImage(blob, source){
+function paste_image(blob, source){
   var urlprefix = '/rest/internal/1.0/AttachTemporaryFile?';
   var attach_div = $("#attachment_div.field-group");
   var file_input_list = $("#attach-file-dialog .file-input-list");
