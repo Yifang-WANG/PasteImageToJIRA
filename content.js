@@ -1,7 +1,3 @@
-
-document.onkeydown = function(e) {return on_keyboard_action(e); }
-document.onkeyup = function(e) {return on_keyboardup_action(e); }
-
 String.prototype.supplant = function (o) {
     return this.replace(/{([^{}]*)}/g,
         function (a, b) {
@@ -10,23 +6,6 @@ String.prototype.supplant = function (o) {
         }
     );
 };
-
-var ctrl_pressed = false;
-
-function on_keyboard_action(event){
-    k = event.keyCode;  
-    //ctrl
-    if(k==17){
-      if(ctrl_pressed == false)
-        ctrl_pressed = true;
-    }
-}
-function on_keyboardup_action(event){
-  //ctrl
-  if(k==17)
-    ctrl_pressed = false;
-}
-
 
 //=== Clipboard ================================================================
 
