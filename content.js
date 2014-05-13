@@ -20,11 +20,12 @@ function on_keyboard_action(event){
       if(ctrl_pressed == false)
         ctrl_pressed = true;
     }
+}
 function on_keyboardup_action(event){
   //ctrl
   if(k==17)
     ctrl_pressed = false;
-    }
+}
 
 
 //=== Clipboard ================================================================
