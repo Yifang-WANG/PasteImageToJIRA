@@ -2,10 +2,27 @@
   "name": "pasteImgToJIRA",
   "version":"0.0.1",
   "manifest_version": 2,
+  "browser_action": {
+      "default_icon": "images/icon19.png",
+      "default_title": "capture sap anywhere"
+  },
+  "background": {
+    "scripts": ["app/background.js"],
+    "persistent": false
+  },
   "content_scripts": [
-  {
-    "matches": ["https://ubtjira.pvgl.sap.corp/*"],
-    "js":["jquery-2.1.1.min.js", "content.js"]
-  }
+    {
+      "matches": ["https://ubtjira.pvgl.sap.corp/*", "http://*/*", "https://*/*"],
+      "js":["lib/jquery-2.1.1.min.js", "app/paste_to_jira.js"]
+    },
+    {
+        "css": [ "stylesheets/selected.css" ],
+        "js": [ "lib/jquery-2.1.1.min.js", "lib/dragresize.js", "app/capture.js"],
+        "matches": [ "http://*/*", "https://*/*" ],
+        "run_at": "document_end"
+     }
+  ],
+  "permissions": [
+    "<all_urls>", "clipboardWrite"
   ]
 }
