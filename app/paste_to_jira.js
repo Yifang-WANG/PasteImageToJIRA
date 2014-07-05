@@ -9,6 +9,30 @@ String.prototype.supplant = function (o) {
 
 //=== Clipboard ================================================================
 
+function b64toBlob(b64Data, contentType, sliceSize) {
+  contentType = contentType || '';
+  sliceSize = sliceSize || 512;
+  
+  var byteCharacters = atob(b64Data);
+  var byteArrays = [];
+  
+  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+      
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+      }
+      
+      var byteArray = new Uint8Array(byteNumbers);
+      
+      byteArrays.push(byteArray);
+  }
+  
+  var blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
 //chrome
 window.addEventListener("paste", pasteHandler);
 function pasteHandler(e){
@@ -16,11 +40,26 @@ function pasteHandler(e){
     var items = e.clipboardData.items;
     if (items){
       for (var i = 0; i < items.length; i++) {
+        var URLObj = window.URL || window.webkitURL;
         if (items[i].type.indexOf("image") !== -1) {
-          var blob = items[i].getAsFile();
-          var URLObj = window.URL || window.webkitURL;
+          var blob = items[i].getAsFile();        
           var source = URLObj.createObjectURL(blob);
           paste_image(blob, source);
+        } else {
+          chrome.storage.local.get("image", function(obj) {
+            try {
+              var b64Data = obj.image.split(",")[1];
+              var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
+              var blob = b64toBlob(b64Data, contentType);
+              console.log(blob);
+
+              var source = URLObj.createObjectURL(blob);
+              paste_image(blob, source);
+            } catch (error) {
+              console.log(error);
+            }
+            
+          });
         }
       }
     }

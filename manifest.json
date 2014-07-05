@@ -7,8 +7,7 @@
       "default_title": "capture sap anywhere"
   },
   "background": {
-    "scripts": ["app/background.js"],
-    "persistent": false
+      "page": "background.html"
   },
   "content_scripts": [
     {
@@ -22,7 +21,5 @@
         "run_at": "document_end"
      }
   ],
-  "permissions": [
-    "<all_urls>", "clipboardWrite"
-  ]
+  "permissions": [ "tabs", "<all_urls>", "storage"]
 }

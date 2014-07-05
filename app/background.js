@@ -116,18 +116,13 @@ function newTab(tab, selectedArea, imageURL) {
         'url': 'edit.html'
     }, function(t) {
 
-        var image = new Image();
+        var image = document.getElementById('test_image');
 
         function imageOnload() {
             sendMessageToTab(t.id, {
                 menuType: "selected",
                 type: "visible",
                 data: [imageURL],
-                //taburl: taburl,
-                //tabtitle: tabtitle,
-                //counter: counter,
-                //ratio: ratio,
-                //scrollBar: scrollBar,
                 centerW: selectedArea.centerW,
                 centerH: selectedArea.centerH,
                 w: image.width,
