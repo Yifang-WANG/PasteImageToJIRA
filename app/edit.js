@@ -1475,11 +1475,8 @@
     drawCtx = drawCanvas.getContext('2d');
 
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-      if (requestFlag) {
-        prepareEditArea(message);
-        prepareTools();
-        requestFlag = 0;
-      }
+      prepareEditArea(message);
+      prepareTools();
     });
 
     $(window).unbind('resize').resize(function() {

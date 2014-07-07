@@ -38,33 +38,40 @@ window.addEventListener("paste", pasteHandler);
 function pasteHandler(e){
   if(e.clipboardData) {
     var items = e.clipboardData.items;
+    var clipboardHasImage = false;
+    var blob;
+    var source;
     if (items){
       for (var i = 0; i < items.length; i++) {
         var URLObj = window.URL || window.webkitURL;
         if (items[i].type.indexOf("image") !== -1) {
-          var blob = items[i].getAsFile();        
-          var source = URLObj.createObjectURL(blob);
-          paste_image(blob, source);
-        } else {
-          chrome.storage.local.get("image", function(obj) {
-            try {
-              var b64Data = obj.image.split(",")[1];
-              var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
-              var blob = b64toBlob(b64Data, contentType);
-              console.log(blob);
-
-              var source = URLObj.createObjectURL(blob);
-              paste_image(blob, source);
-            } catch (error) {
-              console.log(error);
-            }
-            
-          });
+          blob = items[i].getAsFile();        
+          source = URLObj.createObjectURL(blob);
+          clipboardHasImage = true;
+          break;
         }
       }
     }
+
+    if (!clipboardHasImage) {
+      chrome.storage.local.get("image", function(obj) {
+        try {
+          var b64Data = obj.image.split(",")[1];
+          var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
+          blob = b64toBlob(b64Data, contentType);
+          source = URLObj.createObjectURL(blob);          
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    }
+
+    if (blob) {
+      paste_image(blob, source);
+    }
   }
 }
+
 
 function paste_image(blob, source){
   var urlprefix = '/rest/internal/1.0/AttachTemporaryFile?';
@@ -79,7 +86,7 @@ function paste_image(blob, source){
 }
 
 function attach_file_to_jira(blob, source, urlprefix, elem_container, predefined_children_amount) {
-  var atl_token = $(".hidden [name='atl_token']")[0].value;
+  var atl_token = $("[name='atl_token']")[0].value;
 
   var filename = elem_container.children().length - predefined_children_amount + 1;
   var attachFileURL = urlprefix + "filename={file}.png&atl_token={token}&projectId=10501".supplant({
