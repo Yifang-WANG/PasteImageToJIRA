@@ -474,36 +474,13 @@
     $('body').removeClass('crop draw-text').addClass('save');
     $('#save').removeClass('active');
 
-    $('#show-canvas').toggle();
+    $('#show-canvas').hide();
     $('#draw-canvas').attr({
       width: 0,
       height: 0
     });
 
     $($editArea).enableSelection();
-
-    //bind re-edit 
-    $('#re-edit').unbind().text(chrome.i18n.getMessage('reEdit')).click(function() {
-
-      if (uploadFlag == true) {
-        $('#uploadingWarning').jqm().jqmShow();
-        return;
-      }
-
-      $('#saveOnline .content .diigo input[name=title]').val('');
-
-      $('body').removeClass('save');
-      $('#show-canvas').toggle();
-      $($editArea).disableSelection();
-      $('#share+dd div').hide();
-      $('#save_local+dd>p').hide();
-
-      $('#gdrive-share-link').hide();
-      $('.sgdrive .saveForm').show();
-
-
-
-    });
 
     //canvas to base64
     var imageData = '';
@@ -539,27 +516,11 @@
           prepareOptions();
       }
 
-      if (localStorage['format'] == 'jpg') {
-        imageData = showCanvas.toDataURL('image/jpeg');
-      } else {
-        imageData = showCanvas.toDataURL();
-      }
+      imageData = showCanvas.toDataURL();
+
 
       buildImage(imageData);
-
-      // send image data to background, then to flash.
-      chrome.extension.sendRequest({
-        action: 'return_image_data',
-        data: imageData.replace(/^data:image\/(png|jpeg);base64,/, ""),
-        //title: tabtitle.replace(/[#$~!@%^&*();'"?><\[\]{}\|,:\/=+-]/g, ' ')
-      });
     }
-
-    if (!isSavePageInit) {
-      SavePage.init();
-      isSavePageInit = true;
-    }
-
   }
   var cflag = 0;
 
@@ -1473,6 +1434,8 @@
     showCtx = showCanvas.getContext('2d');
     drawCanvas = document.getElementById('draw-canvas');
     drawCtx = drawCanvas.getContext('2d');
+
+    chrome.runtime.sendMessage({action: 'ready'});
 
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       prepareEditArea(message);

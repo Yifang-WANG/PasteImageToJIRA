@@ -48,6 +48,7 @@ function pasteHandler(e){
           blob = items[i].getAsFile();        
           source = URLObj.createObjectURL(blob);
           clipboardHasImage = true;
+          paste_image(blob, source); 
           break;
         }
       }
@@ -59,15 +60,12 @@ function pasteHandler(e){
           var b64Data = obj.image.split(",")[1];
           var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
           blob = b64toBlob(b64Data, contentType);
-          source = URLObj.createObjectURL(blob);          
+          source = URLObj.createObjectURL(blob);
+          paste_image(blob, source);         
         } catch (error) {
           console.log(error);
         }
       });
-    }
-
-    if (blob) {
-      paste_image(blob, source);
     }
   }
 }

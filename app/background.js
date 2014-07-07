@@ -27,6 +27,10 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   sendRequest({action: 'selected'});
 });
 
+
+var editArea;
+var editTab;
+var editImageURL;
 chrome.runtime.onMessage.addListener(function(message) {
   switch(message.action) {
     case 'selected':
@@ -86,6 +90,30 @@ chrome.runtime.onMessage.addListener(function(message) {
     case 'exit':
       getSelectedTab(closeTab);
       break;
+    case 'ready':
+      var image = document.getElementById('test_image');
+
+      function imageOnload() {
+          sendMessageToTab(editTab.id, {
+              menuType: "selected",
+              type: "visible",
+              data: [editImageURL],
+              centerW: editArea.centerW,
+              centerH: editArea.centerH,
+              w: image.width,
+              h: image.height,
+              centerOffX: editArea.centerOffX,
+              centerOffY: editArea.centerOffY
+          });
+          
+          image.src = '';
+          image.removeEventListener('onload', imageOnload, false);
+          image = null;
+      }
+      image.onload = imageOnload;
+      console.log(editImageURL);
+      image.src = editImageURL;
+      break;
   }
 });
 
@@ -115,28 +143,8 @@ function newTab(tab, selectedArea, imageURL) {
     chrome.tabs.create({
         'url': 'edit.html'
     }, function(t) {
-
-        var image = document.getElementById('test_image');
-
-        function imageOnload() {
-            sendMessageToTab(t.id, {
-                menuType: "selected",
-                type: "visible",
-                data: [imageURL],
-                centerW: selectedArea.centerW,
-                centerH: selectedArea.centerH,
-                w: image.width,
-                h: image.height,
-                centerOffX: selectedArea.centerOffX,
-                centerOffY: selectedArea.centerOffY
-            });
-            dataURL = [];
-            image.src = '';
-            image.removeEventListener('onload', imageOnload, false);
-            image = null;
-        }
-        image.onload = imageOnload;
-        console.log(imageURL);
-        image.src = imageURL;
+        editTab = t;
+        editArea = selectedArea;
+        editImageURL = imageURL;
     });   
 }
