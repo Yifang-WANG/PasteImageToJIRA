@@ -1445,8 +1445,10 @@
       });
 
       chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+        if (message.type === 'visible') {
           prepareEditArea(message);
           prepareTools();
+        }
       });
 
       $(window).unbind('resize').resize(function() {
