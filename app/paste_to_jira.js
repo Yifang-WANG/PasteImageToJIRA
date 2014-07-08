@@ -37,35 +37,34 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 window.addEventListener("paste", pasteHandler);
 function pasteHandler(e){
   if(e.clipboardData) {
+
+    chrome.storage.local.get("image", function(obj) {
+      try {
+        if (obj.image) {
+          var b64Data = obj.image.split(",")[1];
+          var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
+          var blob = b64toBlob(b64Data, contentType);
+          var source = URLObj.createObjectURL(blob);
+          paste_image(blob, source); 
+          chrome.storage.local.remove("image");
+          return; 
+        }
+       
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
     var items = e.clipboardData.items;
-    var clipboardHasImage = false;
-    var blob;
-    var source;
     if (items){
       for (var i = 0; i < items.length; i++) {
         var URLObj = window.URL || window.webkitURL;
         if (items[i].type.indexOf("image") !== -1) {
-          blob = items[i].getAsFile();        
-          source = URLObj.createObjectURL(blob);
-          clipboardHasImage = true;
+          var blob = items[i].getAsFile();        
+          var source = URLObj.createObjectURL(blob);
           paste_image(blob, source); 
-          break;
         }
       }
-    }
-
-    if (!clipboardHasImage) {
-      chrome.storage.local.get("image", function(obj) {
-        try {
-          var b64Data = obj.image.split(",")[1];
-          var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
-          blob = b64toBlob(b64Data, contentType);
-          source = URLObj.createObjectURL(blob);
-          paste_image(blob, source);         
-        } catch (error) {
-          console.log(error);
-        }
-      });
     }
   }
 }

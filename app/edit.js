@@ -261,7 +261,6 @@
       })
       $('#tool-panel>div').click(function(e) {
           var target = getTarget(e.target);
-          console.log(target);
           if (target.nodeName == 'DIV')
               return;
           tool(target.id);
@@ -1301,11 +1300,8 @@
   }
 
   function saveText() {
-      console.log("1");
-      //var $input = $($editArea).find('input:not(#share-link input)'); // ':not' solve the bug: 're eidt and save agian, share link input been removed'
-      //var $input = $($editArea).find('input[type!="checkbox"]:not(#share-link input)');
       var $input = $($editArea).find('input[class="textinput"]');
-      console.log($input);
+
       if ($input.length) {
           var texts = '';
           $input.each(function() {
@@ -1461,67 +1457,47 @@
    //////////////////////////////
   var SavePage = {};
 
-  SavePage.getImageSrc = function() {
-      return $('#save-image').attr('src')
-          .replace(/^data:image\/(png|jpeg);base64,/, "");
-  };
-
   SavePage.saveLocal = function() {
-      try {
-          $('#pluginobj')[0].SaveScreenshot(
-              $('#save-image')[0].src,
-              tabtitle.replace(/[#$~!@%^&*();'"?><\[\]{}\|,:\/=+-]/g, ' '), //filename
-              localStorage['savePath'], //save directory
+    var src = document.getElementById('save-image').src;
+    var b64Data = src.split(",")[1];
+    var contentType = src.split(",")[0].split(":")[1].split(";")[0];
 
-              function(result, path) {
-                  console.log(result, path)
-              },
-              'Save Image To' //prompt window title
-          );
-      } catch (error) {
-          var src = document.getElementById('save-image').src;
-          var b64Data = src.split(",")[1];
-          var contentType = src.split(",")[0].split(":")[1].split(";")[0];
+    function b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 1024;
 
-          function b64toBlob(b64Data, contentType, sliceSize) {
-              contentType = contentType || '';
-              sliceSize = sliceSize || 1024;
+        function charCodeFromCharacter(c) {
+            return c.charCodeAt(0);
+        }
 
-              function charCodeFromCharacter(c) {
-                  return c.charCodeAt(0);
-              }
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
 
-              var byteCharacters = atob(b64Data);
-              var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = Array.prototype.map.call(slice, charCodeFromCharacter);
+            var byteArray = new Uint8Array(byteNumbers);
 
-              for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                  var slice = byteCharacters.slice(offset, offset + sliceSize);
-                  var byteNumbers = Array.prototype.map.call(slice, charCodeFromCharacter);
-                  var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
 
-                  byteArrays.push(byteArray);
-              }
+        var blob = new Blob(byteArrays, {
+            type: contentType
+        });
+        return blob;
+    }
 
-              var blob = new Blob(byteArrays, {
-                  type: contentType
-              });
-              return blob;
-          }
+    var blob = b64toBlob(b64Data, contentType);
 
-          var blob = b64toBlob(b64Data, contentType);
+    var blobUrl = (window.webkitURL || window.URL).createObjectURL(blob);
 
-          var blobUrl = (window.webkitURL || window.URL).createObjectURL(blob);
+    var a = document.createElement('a');
 
-          var a = document.createElement('a');
-
-          var e = document.createEvent("MouseEvents");
-          e.initMouseEvent("click", !0, !0, window, 1, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
-          a.setAttribute("href", blobUrl);
-          a.setAttribute("download", tabtitle.replace(/[#$~!@%^&*();'"?><\[\]{}\|,:\/=+-]/g, ' ') + "." + contentType.split('/')[1]);
-          a.dispatchEvent(e);
-
-
-      }
+    var e = document.createEvent("MouseEvents");
+    e.initMouseEvent("click", !0, !0, window, 1, 0, 0, 0, 0, !1, !1, !1, !1, 0, null);
+    a.setAttribute("href", blobUrl);
+    a.setAttribute("download",  "temp_image." + contentType.split('/')[1]);
+    a.dispatchEvent(e);
 
   };
 

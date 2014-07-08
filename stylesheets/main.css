@@ -38,10 +38,6 @@ input[type=password] {
 	-webkit-transition:color ease-in .2s;
     
 }
-#tool-panel a#logo:hover {
-    background:url(../images/logo-half.png) no-repeat bottom left;
-    color:#fff;
-}
 
 #tool-panel>div {
     margin:0 auto; padding:12px 240px;
@@ -110,140 +106,10 @@ input[type=password] {
     cursor: pointer; 
 }
 
-/* feedback buttons */
-#feedback {
-    display:none;
-    float:right;
-    list-style:none;
-    height:22px;
-    margin-top:26px; margin-right: 200px;
-    padding-left:89px;
-	
-}
 @-webkit-keyframes bounce {
 	0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
 	40% {-webkit-transform: translateY(-30px);}
 	60% {-webkit-transform: translateY(-15px);}
-}
-#feedback li {
-    position: relative;
-    float:left;
-    height:19px;
-    margin-top: 3px; margin-right: 12px;
-    -webkit-transition-property:margin-top;
-    -webkit-transition-duration: 0.2s;
-    -webkit-transition-timing-function: ease-in-out;
-	/*-webkit-animation-name: bounce;*/
-}
-
-li#domeafavor, li#recommend {
-    margin-top:0; margin-right:15px;
-    -webkit-transition:none;
-}
-li#domeafavor {
-    width:80px; height:22px;
-    background:transparent url(../images/text-domeafavor.png) 0 50% no-repeat;
-}
-li#recommend {
-    width:63px; height:22px;
-    margin-left: 40px;
-    background:transparent url(../images/text-recommend.png) 0 50% no-repeat;
-}
-
-#feedback li:hover {
-    height:22px;
-    margin-top: 0;
-	-webkit-animation-name: bounce;
-    /*-webkit-transition-property:height, margin-top;
-    -webkit-transition-duration: 0.1s, 0.1s;
-    -webkit-transition-timing-function: ease-in-out, ease-in-out;*/
-}
-#feedback li::before {
-    content:'';
-    position:absolute;
-    top:-20px; left: -137px;
-    width:300px;
-    text-align: center;
-    color:#F5F5F5;
-    font-weight: bold;
-}
-li#contribute::before {
-	left: -102px;
-}
-li#tweet {
-    width:24px;
-}
-li#tweet:hover::before {
-    content:'__MSG_tweet__';
-}
-li#rating {
-    width:26px;
-}
-li#rating:hover::before {
-    content:'__MSG_rating__';
-}
-li#cemail {
-    width:28px;
-}
-li#cemail:hover::before {
-    content:'__MSG_cemail__';
-}
-li#contribute {
-	width:76px/*96px*/;
-}
-li#contribute:hover::before {
-  content:'Make a small contribution.';
-}
-li#diigo_web_highlighter {
-    width:24px;
-}
-li#diigo_web_highlighter:hover::before {
-    content:'__MSG_diigo_web_highlighter__';
-}
-
-#feedback li a,
-li#contribute form {
-    display:inline-block;
-    width:100%; height:100%;
-    background:#FFF url(../images/icons-options.png) 0 0 no-repeat;
-}
-
-li#tweet a {
-    background-position:0 0;
-}
-li#tweet:hover a {
-		background-position:0 -19px;
-}
-li#rating a{
-    background-position:-24px 0;
-}
-li#rating:hover a{
-    background-position:-24px -19px;
-}
-li#cemail a {
-    background-position:-50px 0;
-}
-li#cemail:hover a {
-    background-position:-50px -19px;
-}
-li#contribute form {
-    background-position:-102px 0;
-}
-li#contribute:hover form {
-		cursor:pointer;
-    background-position:-102px -19px;
-}
-li#contribute form input {
-		width: 100%;
-		height: 100%;
-		cursor: pointer;
-}
-
-li#diigo_web_highlighter a {
-    background-position:-78px 0;
-}
-li#diigo_web_highlighter:hover a {
-    background-position:-78px -19px;
 }
 
 /* tip */
@@ -365,49 +231,6 @@ input:not(.cd-input) {
 .lightLink{
     display:inline !important;
     float:none !important;
-}
-/* Promote 
-----------------------------------*/
-#promote {
-    display:none;
-    position:fixed; bottom:0; right:0;
-    width:84px; height:101px;
-    background:url(../images/corner-collapsed.png) right bottom no-repeat;
-    cursor:pointer;
-    color: #fff;
-}
-#promote.expanded {
-    width:700px; height:382px;
-    background-image:url(../images/corner-expanded.png);
-}
-#promote #content {
-    display: none;
-    margin-top: 340px;
-    margin-right:100px;
-    text-align: right;
-}
-#promote p{
-    line-height: 2;
-    margin-bottom: 10px;
-}
-#promote a { 
-    color:#fff;
-    text-decoration:none;
-    background-color:#333;
-    padding:0 5px;
-    border-radius:5px;
-}
-#promote a:hover {
-    text-decoration:none;
-    background-color:#000;
-    color:#fff;
-}
-#promote #diigo_highlighter{
-    font-size: 13px;
-}
-#promote #diigo_highlighter a{
-    font-weight: bold;
-    font-size: 12px;
 }
 
 /* Crop
@@ -630,16 +453,6 @@ body.save #edit-area {
 #error { line-height: 20px !important; }
 
 #save_local+dd p+p { font-size:12px; }
-
-/* .save #save-tip dd a { float:left; margin-right:10px; color:#f5f5f5; }
-.save #save-tip dd a:hover { text-decoration:underline; }
-.save #save-tip dd a span { float:left; margin-right:4px; padding:2px 0; background-image:url('../images/icons-16.png'); background-repeat:no-repeat; width:16px; height:16px; }
-.save #save-tip dd a#gmail span { background-position:0 50%; }
-.save #save-tip dd a#yahoo span { background-position:-16px 50%; }
-.save #save-tip dd a#hotmail span { background-position:-32px 50%; }
-.save #save-tip dd a#twitter span {background-position:-48px 50%; }
-.save #save-tip dd a#facebook span { background-position:-64px 50%; }
-.save #save-tip dd a#buzz span { background-position:-80px 50%; } */
 
 .save #save-tip dd a#upload, .save #save-tip dd a#save_button {
     display:inline-block;
@@ -1042,82 +855,6 @@ label[for=privacy] {
 	color:#CBCBCB;
 }
 
-/* #account */
-#saveOnline.as #account {
-	display:none;
-}
-
-#account strong {
-	font-weight:normal;
-	color:#CBCBCB;
-}
-
-#account input {
-	font-weight:normal;
-	background-color:#FFF;
-}
-.loginByGoogle a {
-	float:right;
-	margin-top:10px;
-}
-.loginByDiigo {
-	margin-top:10px;
-	border-top:1px solid #676767;
-	padding-top:10px;
-}
-.loginByDiigo li {
-	margin-bottom:5px;
-}
-.loginByDiigo li input {
-	width:105px;
-	font-size:12px;
-}
-.loginByDiigo li input:first-child {
-	margin-right:10px;
-}
-.loginByDiigo li .button {
-	float:right !important;
-}
-
-/* overide old */
-#upload {
-	display:none !important; 
-}
-
-/* Account Form
-----------------------------------*/
-.signin #account {
-	display:none;
-}
-#account table {
-	width:100%;
-}
-#account table td {
-	width:50%;
-}
-#account strong {
-	line-height:16px;
-}
-
-#diigoAccount.authFailure span::after {
-	content:'Invalid Username / Email and Password combination.';
-	position:absolute;
-	margin-left:20px;
-        margin-top: -5px;
-	line-height: 16px;
-        font-weight: normal;
-	color:red;
-        font-size: 11px;
-
-}
-.authing span.button::before {
-	content:'Signing in...';
-	position:absolute;
-	margin-left:-90px;
-  font-weight: normal;
-  color: #CBCBCB;
-	text-shadow:none;
-}
 
 /* jqModal - popup */
 .jqmWindow {
@@ -1287,17 +1024,7 @@ label[for=privacy] {
 	width: 20px;
 	height: 20px;
 }
-.diigo::before {
-	background: url(../images/diigo.png) no-repeat 1px 1px;
-	background-size: 17px;
-}
-.as::before {
-	background: url(../images/icon19.png) no-repeat 1px 1px;
-	background-size: 17px;
-}	
-.local::before {
-	background:url(../images/icons.png) no-repeat -160px 0;
-}
+
 #saveOptionList>li:hover {
 	cursor:pointer;
 }
@@ -1333,24 +1060,7 @@ div#saveOptionBody:not(.showContent) .share {
 .private .shareLink {
 	display:none !important;
 }
-.diigo .saveForm,
-.diigo .premium {
-	display:none;
-}
-.diigo .premium a { 
-	margin-left:10px;
-	color:#f5f5f5; 
-	text-decoration:underline; 
-}
-.diigo.signin .saveForm {
-	display:block; 
-}
-.diigo .saveForm li {
-	margin-bottom:10px;
-}
-.diigo .saveForm li:last-child span:first-child {
-	line-height:24px;
-}
+
 #privacy {
 	vertical-align:-2px;
 }
@@ -1364,69 +1074,6 @@ div#saveOptionBody:not(.showContent) .share {
 	/*margin-left:-50%; 
 	-webkit-transition: margin-left 0.2s ease-out;*/
 }
-/* #saveOptionContent {
-	left:100%;
-	-webkit-transition: left 0.2s ease-out;
-}
-.showContent #saveOptionContent {
-	left:0;
-	-webkit-transition: left 0.2s ease-out;
-} */
-/* #saveOption .head {
-	width:100%;
-	margin-left:0;
-	line-height:20px;
-	-webkit-transition: margin-left 0.2s ease-out;
-}
-#saveOption .head:hover {
-	cursor:pointer;
-}
-#saveOption .head:hover::after {
-	content:url(../images/spot.png);
-	float:right;
-}
-#saveOption .head::before {
-	content: '';
-	float: left;
-	margin-right: 5px;
-	padding: 0;
-	width: 20px;
-	height: 20px;
-}
-.diigo .head::before {
-	background: url(../images/diigo.png) no-repeat 1px 1px;
-	background-size: 17px;
-}
-.as .head::before {
-	background: url(../images/icon19.png) no-repeat 1px 1px;
-	background-size: 17px;
-}	
-.local .head::before {
-	background:url(../images/icons.png) no-repeat -160px 0;
-}  */
-
-/* #saveOption .body {
-	margin-top:-20px; 
-	margin-left:100%;  
-	width:100%;
-	-webkit-transition: margin-left 0.2s ease-out;
-}
-#saveOption.showBody>li {
-	height:0;
-	-webkit-transition: height 0.2s ease-out; 
-}
-#saveOption.showBody>li.selected { 
-	height:auto;
-	-webkit-transition: height 0.2s ease-out;
-} 
-#saveOption.showBody .head {	
-	margin-left:-100%;
-	-webkit-transition: margin-left 0.2s ease-out;
-}
-#saveOption .selected .body {
-	margin-left:0;
-	-webkit-transition: margin-left 0.2s ease-out;
-} */
 
 /* overide */
 body.save #edit-area {
@@ -1439,92 +1086,6 @@ body.save #edit-area {
 	left: 10px;
 }
 
-/* promotion container */
-#promotion-container {
-	margin: 60px auto 10px auto;
-    width: 360px;
-	display: none;
-}
-.save #promotion-container {
-	display: block;
-}
-#promotions {
-	width: 350px !important;
-	height: 50px !important;
-	margin: 0 !important;
-}
-
-#promotions .promoHeader {
-	float: left !important;
-	border-right: 1px solid #777;
-	padding: 14px 5px 14px 0;
-}
-#promotions .msgItem a {
-	margin-left: 102px;
-	padding-top: 6px;
-	background-position-y: 2px !important;
-}
-/*
-#promotions #closePromoMsg {
-	margin-top: 6px !important;
-	margin-right: 5px;
-}
-#promotions .msgItem {
-	display: inline !important;
-}
-#promotions .msgItem a {
-	min-height: 20px !important;
-	line-height: 24px !important;
-	background-size: 20px !important;
-	padding-left: 25px !important;
-	margin-left: 110px !important;
-	background-position: 0 2px !important;
-}
-#promotions .msgItem a strong {
-	display: inline !important;
-}
-#promotions .msgItem a strong::after {
-	content: ' ' !important;
-}*/
-#promotion-container-bottom{
-    margin-top: 30px;
-}
-#promotion-container-bottom iframe{
-    height: 100px;
-    width: 250px;
-    border: none;
-}
-
-/* about diigo */
-#about-diigo {
-	color: #999;
-	line-height: 16px;
-	margin-top: 20px;
-	display: none;
-}
-.showContent+#about-diigo {
-	display: block;
-}
-#about-diigo .sectionTitle {
-/*	color: #EEE;*/
-	font-size: 15px;
-	font-weight: bold;
-	line-height: 24px;
-	margin-bottom: 4px;
-}
-#about-diigo ul {
-	margin-left: 20px;
-	list-style: disc;
-}
-#about-diigo ul li {
-	margin-top: 5px;
-}
-#about-diigo a {
-	color: #999;
-}
-#about-diigo a:hover {
-	color: #CBCBCB;
-}
 
 /*-=====*/
 
@@ -1540,84 +1101,4 @@ body.save #edit-area {
     border-radius: 3px;
     line-height: 18px;
     display: inline-block;
-}
-
-/*===========save to google drive==============*/
-#gdriveImageName{
-    width: 215px;
-    margin-bottom: 10px;
-}
-#gdrive-username{
-    /*height: 20px;*/
-    line-height: 20px;
-    display: inline-block;
-    max-width: 91px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    vertical-align: top;
-}
-.sgdrive::before{
-    background: url(../images/gdrive.png);
-    background-size: 19px;
-}
-#gdrive-save{
-}
-#gdrive-signout{
-    color: #888;
-    text-decoration: none;
-
-}
-#gdrive-signout:hover{
-    color: #666;
-}
-#gdrive-share-link{
-    display: none;
-}
-#gs{
-    margin-top: 5px;
-}
-#gdrive-user{
-    display: none;
-    margin-top: 10px;
-}
-#gdrive-user p span{
-    color: #888;
-    cursor: pointer;
-}
-#gdrive-user p span:hover{
-    color: #666;
-}
-#saveOptionContent .sgdrive .saveForm{
-    height: 50px;
-}
-#notice{
-    display: none;
-    padding-top: 3px;
-    border-top:1px solid #999;
-}
-#notice h3{
-    margin-bottom: 4px;
-}
-
-#gdrive-private{
-    vertical-align: middle;
-    margin-top: 2px;
-}
-.sgdrive .saveForm label{
-    vertical-align: middle;
-    margin-left: 4px;
-    margin-top: 2px;
-    display: inline-block;
-}
-
-/************adQuire**************/
-#adQuire{
-    height: 200px;
-    margin-top: 10px;
-}
-
-#adQuire iframe{
-    border: none;
-    height: 200px;
 }

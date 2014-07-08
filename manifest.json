@@ -3,8 +3,14 @@
   "version":"0.0.1",
   "manifest_version": 2,
   "browser_action": {
-      "default_icon": "images/icon19.png",
+      "default_icon": "images/camera-icon.png",
       "default_title": "capture sap anywhere"
+  },
+  "icons": {
+    "128": "images/camera-icon.png",
+    "16": "images/camera-icon.png",
+    "32": "images/camera-icon.png",
+    "48": "images/camera-icon.png"
   },
   "background": {
       "page": "background.html"

@@ -153,33 +153,3 @@ a#awesome_screenshot_cancel {font-size:13px;}
     0%{opacity: 0}
     100%{opacity: 1}
 }
-
-/***********Admanage**********/
-
-#sa-admanage-box{
-    margin: 0px -28px 11px 0px;
-    padding: 2px 8px 6px 8px;
-    background-color: #FFF7ED;
-}
-
-#sa-admanage-box ol{
-    margin-top: -14px;
-}
-
-#sa-admanage-box h2 span{
-    font-size: 10px;
-    text-align: left;
-    color: #767676;
-    font-weight: normal;
-}
-
-#sa-admanage-box h2{
-    margin: 0px;
-    text-align: right;
-    line-height: 10px;
-}
-
-#sa-admanage-box li{
-    margin: 20px 8px 0 0;
-    max-width: 440px;
-}
