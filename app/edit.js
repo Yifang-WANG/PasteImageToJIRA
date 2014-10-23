@@ -1509,6 +1509,8 @@
                   SavePage.saveLocal();
               } else if ($(target).hasParent('.copy_button')) {
                   SavePage.copy();
+              } else if ($(target).hasParent('.copy_button_jira')) {
+                  SavePage.copyToJira();
               }
 
           }
@@ -1528,6 +1530,13 @@
       }
 
   };
+
+  SavePage.copyToJira = function() {
+     SavePage.copy();
+     chrome.tabs.create({
+            'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'
+        });   
+  }
 
   SavePage.init = function() {
       SavePage.initSaveOption();

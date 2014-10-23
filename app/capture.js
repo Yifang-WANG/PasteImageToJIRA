@@ -32,6 +32,7 @@ var wrapperHTML =
                     '<div id="awesome_screenshot_action">'+
                       '<a id="awesome_screenshot_cancel"><span id="awesome_screenshot_cancel_icon"></span>Cancel</a>'+
                       '<a id="awesome_screenshot_capture"><span id="awesome_screenshot_capture_icon"></span>Capture</a>'+
+                      '<a id="awesome_screenshot_copy_jira"><span id="awesome_screenshot_copy_jira_icon"></span>CopyToJira</a>'+
                     '</div>'+
                   '</div>'+
                 '</div>';
@@ -199,7 +200,11 @@ function bindCenter() {
         switch (e.target.id) {
             case 'awesome_screenshot_capture':
             case 'awesome_screenshot_capture_icon':
-                captureSelected();
+                captureSelected('capture_selected_done');
+                break;
+            case 'awesome_screenshot_copy_jira':
+            case 'awesome_screenshot_copy_jira_icon':
+                captureSelected('copy_to_jira_done');
                 break;
             case 'awesome_screenshot_cancel':
             case 'awesome_screenshot_cancel_icon':
@@ -208,7 +213,7 @@ function bindCenter() {
         }
     }
 
-    function captureSelected() {
+    function captureSelected(action_type) {
         var asSize = document.getElementById('awesome_screenshot_size');
         setStyle(asSize, 'display', 'none');
         dragresize.deselect(center);
@@ -271,7 +276,7 @@ function bindCenter() {
 
             setTimeout(function() {
                 sendRequest({
-                    action: 'capture_selected_done',
+                    action: action_type,
                     data: {
                         x: offX,
                         y: offY,

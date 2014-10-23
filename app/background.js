@@ -85,6 +85,21 @@ chrome.runtime.onMessage.addListener(function(message) {
 
       captureVisible(selectedArea);
       break;
+    case 'copy_to_jira_done':
+      centerH = message.data.h;
+      centerW = message.data.w;
+      centerOffX = message.data.x;
+      centerOffY = message.data.y;
+      var selectedArea = {
+        "centerH": centerH,
+        "centerW": centerW,
+        "centerOffX": centerOffX,
+        "centerOffY": centerOffY
+      };
+
+      copyToJiraVisible(selectedArea);
+
+      break;
     case 'scroll_next_done':
       break;
     case 'exit':
@@ -147,4 +162,37 @@ function newTab(tab, selectedArea, imageURL) {
         editArea = selectedArea;
         editImageURL = imageURL;
     });   
+}
+
+function copyToJiraVisible(selectedArea) {
+
+    function captureVisibleTab(tab) {
+        chrome.tabs.captureVisibleTab(null, {
+            format: 'png'
+        }, function(imageURL) {
+            var image = document.getElementById('test_image');
+            
+            var imageOnload = image.onload = function() {
+              
+              var canvas = document.createElement('canvas');
+              var ctx = canvas.getContext('2d');
+              var sx = selectedArea.centerOffX * window.devicePixelRatio;
+              var sy = selectedArea.centerOffY * window.devicePixelRatio;
+              var w = selectedArea.centerW * window.devicePixelRatio;
+              var h = selectedArea.centerH * window.devicePixelRatio;
+              ctx.drawImage(this, sx, sy, w, h, 0, 0, w, h);
+              var imageDateUrl = canvas.toDataURL();
+
+              chrome.storage.local.set({"image": imageDateUrl});
+              chrome.tabs.create({'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'});
+
+              image.src = '';
+              image.removeEventListener('onload', imageOnload, false);
+              image = null;
+            }; 
+            image.src = imageURL;
+        });
+    };
+
+    getSelectedTab(captureVisibleTab);
 }

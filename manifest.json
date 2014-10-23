@@ -17,7 +17,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://ubtjira.pvgl.sap.corp/*", "http://*/*", "https://*/*"],
+      "matches": ["https://ubtjira.pvgl.sap.corp/*"],
       "js":["lib/jquery-2.1.1.min.js", "app/paste_to_jira.js"]
     },
     {
