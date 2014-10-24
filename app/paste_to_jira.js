@@ -22,6 +22,26 @@
     });
   });
 
+  chrome.runtime.onMessage.addListener(function(message) {
+    if (message && message.action == 'copyToJira') {
+      chrome.storage.local.get("image", function(obj) {
+      try {
+        if (obj.image) {
+          var URLObj = window.URL || window.webkitURL;
+          var b64Data = obj.image.split(",")[1];
+          var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
+          var blob = b64toBlob(b64Data, contentType);
+          var source = URLObj.createObjectURL(blob);
+          paste_image(blob, source); 
+          chrome.storage.local.remove("image"); 
+        }
+       
+      } catch (error) {
+        console.log(error);
+      }});
+    }
+  });
+
 //===== helpers ===============================================================
 
 String.prototype.supplant = function (o) {

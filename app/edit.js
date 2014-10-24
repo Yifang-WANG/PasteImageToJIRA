@@ -1532,10 +1532,23 @@
   };
 
   SavePage.copyToJira = function() {
-     SavePage.copy();
-     chrome.tabs.create({
-            'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'
-        });   
+    SavePage.copy();
+    chrome.tabs.query({},
+      function(tabs) {
+        var jiraTab = null;
+        var ii = 0;
+        for (ii = 0; ii < tabs.length; ii++) {
+          if (tabs[ii].url.indexOf('https://ubtjira.pvgl.sap.corp:8443') >=0) {
+            jiraTab = tabs[ii];
+            break;
+          }
+        }
+        if (jiraTab == null) {
+          chrome.tabs.create({'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'});
+        } else {
+          sendMessageToTab(jiraTab.id, {action:"copyToJira"});
+        }
+    });
   }
 
   SavePage.init = function() {

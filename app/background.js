@@ -184,8 +184,23 @@ function copyToJiraVisible(selectedArea) {
               var imageDateUrl = canvas.toDataURL();
 
               chrome.storage.local.set({"image": imageDateUrl});
-              chrome.tabs.create({'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'});
-
+              chrome.tabs.query({},
+                function(tabs) {
+                  var jiraTab = null;
+                  var ii = 0;
+                  for (ii = 0; ii < tabs.length; ii++) {
+                    if (tabs[ii].url.indexOf('https://ubtjira.pvgl.sap.corp:8443') >=0) {
+                      jiraTab = tabs[ii];
+                      break;
+                    }
+                  }
+                  if (jiraTab == null) {
+                    chrome.tabs.create({'url': 'https://ubtjira.pvgl.sap.corp:8443/secure/Dashboard.jspa'});
+                  } else {
+                    sendMessageToTab(jiraTab.id, {action:"copyToJira"});
+                  }
+              });
+             
               image.src = '';
               image.removeEventListener('onload', imageOnload, false);
               image = null;
