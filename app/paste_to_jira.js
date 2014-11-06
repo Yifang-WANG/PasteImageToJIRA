@@ -32,8 +32,9 @@
           var contentType = obj.image.split(",")[0].split(":")[1].split(";")[0];
           var blob = b64toBlob(b64Data, contentType);
           var source = URLObj.createObjectURL(blob);
-          paste_image(blob, source); 
-          chrome.storage.local.remove("image"); 
+          if (paste_image(blob, source)) {
+            chrome.storage.local.remove("image"); 
+          }
         }
        
       } catch (error) {
@@ -125,7 +126,9 @@ function paste_image(blob, source){
     var children_amount = attach_div.is(':visible') ? 3 : 2;
 
     attach_file_to_jira(blob, source, urlprefix, container, children_amount);
+    return true;
   }
+  return false;
 }
 
 function attach_file_to_jira(blob, source, urlprefix, elem_container, predefined_children_amount) {
