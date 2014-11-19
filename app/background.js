@@ -166,7 +166,7 @@ function newTab(tab, selectedArea, imageURL) {
 
 function copyToJiraVisible(selectedArea) {
 
-    function captureVisibleTab(tab) {
+    function captureJiraVisibleTab(tab) {
         chrome.tabs.captureVisibleTab(null, {
             format: 'png'
         }, function(imageURL) {
@@ -175,11 +175,14 @@ function copyToJiraVisible(selectedArea) {
             var imageOnload = image.onload = function() {
               
               var canvas = document.createElement('canvas');
-              var ctx = canvas.getContext('2d');
+              
               var sx = selectedArea.centerOffX * window.devicePixelRatio;
               var sy = selectedArea.centerOffY * window.devicePixelRatio;
               var w = selectedArea.centerW * window.devicePixelRatio;
               var h = selectedArea.centerH * window.devicePixelRatio;
+              canvas.width = w;
+              canvas.height = h;
+              var ctx = canvas.getContext('2d');
               ctx.drawImage(this, sx, sy, w, h, 0, 0, w, h);
               var imageDateUrl = canvas.toDataURL();
 
@@ -209,5 +212,5 @@ function copyToJiraVisible(selectedArea) {
         });
     };
 
-    getSelectedTab(captureVisibleTab);
+    getSelectedTab(captureJiraVisibleTab);
 }
